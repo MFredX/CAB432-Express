@@ -64,9 +64,7 @@ function parsePhotoRsp(rsp) {
   let s = "";
   for (let i = 0; i < rsp.photos.photo.length; i++) {
     photo = rsp.photos.photo[i];
-    t_url = `https://farm${photo.farm}.staticflickr.com/${photo.server}/${
-      photo.id
-    }_${photo.secret}_t.jpg`;
+    t_url = `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}_t.jpg`;
     p_url = `https://www.flickr.com/photos/${photo.owner}/${photo.id}`;
     s += `<a href="${p_url}"><img alt="${photo.title}" src="${t_url}"/></a>`;
   }
