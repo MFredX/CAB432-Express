@@ -25,10 +25,10 @@ app.get("/", (req, res) => {
     <li><a href="http://localhost:3000/teams/Crystal%20Palace">Crystal Palace</a></li>
     <li><a href="http://localhost:3000/teams/Everton">Everton</a></li>
     <li><a href="http://localhost:3000/teams/Leicester%20City">Leicester City</a></li>
-    <li><a href="http://localhost:3000/teams/Liverpool>Liverpool</a></li>
-    <li><a href="http://localhost:3000/teams/Manchester%20City>Manchester City</a></li>
-    <li><a href="http://localhost:3000/teams/Manchester%20United>Manchester United/a></li>
-    <li><a href="http://localhost:3000/teams/Newcastle%20United>Newcastle United</a></li>
+    <li><a href="http://localhost:3000/teams/Liverpool">Liverpool</a></li>
+    <li><a href="http://localhost:3000/teams/Manchester%20City">Manchester City</a></li>
+    <li><a href="http://localhost:3000/teams/Manchester%20United">Manchester United</a></li>
+    <li><a href="http://localhost:3000/teams/Newcastle%20United">Newcastle United</a></li>
     <li><a href="http://localhost:3000/teams/Norwich%20City">Norwich City</a></li>
     <li><a href="http://localhost:3000/teams/Sheffield%20United">Sheffield United</a></li>
     <li><a href="http://localhost:3000/teams/Southampton">Southampton</a></li>
@@ -44,7 +44,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/search?", flickrRouter);
-// app.use("/team?", teamRouter);
+app.use("/teams?", teamRouter);
 app.listen(port, function() {
   console.log(`Express app listening at http://${hostname}:${port}/`);
 });
