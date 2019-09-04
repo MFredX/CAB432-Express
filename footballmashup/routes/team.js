@@ -120,6 +120,8 @@ function createPage(rsp) {
     <li>Stadium Name:${rsp.teams[0].strStadium}</li>
    
     <img src= ${rsp.teams[0].strStadiumThumb} >
+    </br>
+    <li><a href="http://localhost:3000/news/manager">Click here to get news</a></li>
 
     </body></html>`;
   return str;
