@@ -5,6 +5,18 @@ const router = express.Router();
 const axios = require("axios");
 router.use(logger("tiny"));
 
+const teamNewsData = {
+  id: null,
+  name: null,
+  stadium: null,
+  manager: null,
+  players: []
+};
+
+const getResponse = {
+  first: null,
+  second: null
+};
 router.get("/:team", (req, res) => {
   const options = createSportsDBObj(req.params.team);
   //Construct url
@@ -18,8 +30,27 @@ router.get("/:team", (req, res) => {
       return response.data;
     })
     .then(rsp => {
-      console.log(rsp);
-      const s = createPage(rsp);
+      //console.log(rsp);
+      // const s = createPage(rsp);
+      getResponse.first = rsp;
+
+      // res.write(s);
+      //res.end();
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  //Team URL
+  const teamURL = `https://www.thesportsdb.com/api/v1/json/1/lookup_all_players.php?id=${options.id}`;
+  axios
+    .get(teamURL)
+    .then(response => {
+      // res.writeHead(response.status, { "content-type": "text/html" });
+      return response.data;
+    })
+    .then(rsp => {
+      //console.log(rsp);
+      const s = addtoPage(getResponse.first, rsp);
       res.write(s);
       res.end();
     })
@@ -27,7 +58,10 @@ router.get("/:team", (req, res) => {
       console.error(error);
     });
 });
+//create afunction wchich accepts both api responses and create a page
+//store responses in consts
 
+router.get("/squad", (req, res) => {});
 function createSportsDBObj(query) {
   //https://www.thesportsdb.com/api/v1/json/1/lookupteam.php?id={TEAMID}
   const sportsDBObj = {
@@ -109,6 +143,12 @@ function createSportsDBObj(query) {
 function createPage(rsp) {
   //const imageString = parsePhotoRsp(rsp);
   //Headers and opening body, then main content and close
+
+  //Editing team news objects as his info is accessed
+  teamNewsData.name = rsp.teams[0].strTeam;
+  teamNewsData.stadium = rsp.teams[0].strStadium;
+
+  console.log(teamNewsData);
   const str = `<!DOCTYPE html>
     <html><head><title>Sports DB</title></head>
     <body>
@@ -127,6 +167,43 @@ function createPage(rsp) {
   return str;
 }
 
+function addtoPage(first, second) {
+  teamNewsData.name = first.teams[0].strTeam;
+  teamNewsData.stadium = first.teams[0].strStadium;
+
+  let squadList = "";
+  for (let i = 0; i < second.player.length; i++) {
+    onePlayerName = second.player[i].strPlayer;
+    onePlayerPosition = second.player[i].strPosition;
+    // squadList += onePlayerName + `  ` + onePlayerPosition + `</br>`;
+    // squadList += `${onePlayerName}  <i>${onePlayerPosition}</i>  </br>`;
+    if (second.player[i].strPosition == "Manager") {
+      teamNewsData.manager = onePlayerName;
+      squadList += `${onePlayerName}  <b><i>${onePlayerPosition}</i></b>  </br>`;
+    } else {
+      squadList += `${onePlayerName}  <i>${onePlayerPosition}</i>  </br>`;
+    }
+  }
+  console.log(teamNewsData);
+  const str = `<!DOCTYPE html>
+    <html><head><title>Sports DB</title></head>
+    <body>
+    <img src= ${first.teams[0].strTeamBadge} >
+    <img src= ${first.teams[0].strTeamJersey} >
+
+    <h1>${first.teams[0].strTeam}</h1>
+    <p>${first.teams[0].strDescriptionEN}</p> 
+    <li>Stadium Name:${first.teams[0].strStadium}</li>
+   
+    <img src= ${first.teams[0].strStadiumThumb} >
+    </br>
+    <li><a href="http://localhost:3000/news/manager">Click here to get news</a></li>
+    <h3>Squad List</h3>
+    ${squadList}
+    </body></html>`;
+  return str;
+}
+
 // function parsePhotoRsp(rsp) {
 //     let s = "";
 //     for (let i = 0; i < rsp.photos.photo.length; i++) {
@@ -137,4 +214,9 @@ function createPage(rsp) {
 //     }
 //     return s;
 //   }
-module.exports = router;
+//module.exports = router;
+//module.exports = teamNewsData;
+module.exports = {
+  router: router,
+  teamNewsData: teamNewsData
+};

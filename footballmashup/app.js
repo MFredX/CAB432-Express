@@ -45,7 +45,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/search?", flickrRouter);
-app.use("/teams?", teamRouter);
+app.use("/teams?", teamRouter.router);
 app.use("/news?", newsRouter);
 app.listen(port, function() {
   console.log(`Express app listening at http://${hostname}:${port}/`);
