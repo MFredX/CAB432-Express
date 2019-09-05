@@ -1,5 +1,4 @@
 const express = require("express");
-const flickrRouter = require("./routes/flickr");
 const teamRouter = require("./routes/team");
 const newsRouter = require("./routes/news");
 const helmet = require("helmet");
@@ -44,7 +43,6 @@ app.get("/", (req, res) => {
   res.end();
 });
 
-app.use("/search?", flickrRouter);
 app.use("/teams?", teamRouter.router);
 app.use("/news?", newsRouter);
 app.listen(port, function() {
