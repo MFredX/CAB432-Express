@@ -10,7 +10,8 @@ const teamNewsData = {
   name: null,
   stadium: null,
   manager: null,
-  players: []
+  players: [],
+  selectedPlayer: null
 };
 //Object to store response from each get request
 const getResponse = {
@@ -140,9 +141,14 @@ function addtoPage(first, second) {
       squadList += `${onePlayerName}  <b><i>${onePlayerPosition}</i></b>  </br>`;
     } else {
       teamNewsData.players.push(onePlayerName);
-      squadList += `${onePlayerName}  <i>${onePlayerPosition}</i>  </br>`;
+      squadList += `${onePlayerName}  <i>${onePlayerPosition}</i> <li><a href="http://localhost:3000/player/${onePlayerName}">Click here for player news</a></li>  </br>`;
     }
   }
+  // let dropList = `<select id="players" name="players">`;
+  // for (let i = 0; i < teamNewsData.players.length; i++) {
+  //   dropList += `<option value=${teamNewsData.players[i]}>${teamNewsData.players[i]}</option>`;
+  // }
+
   console.log(teamNewsData);
   const str = `<!DOCTYPE html>
     <html><head><title>Sports DB</title></head>
@@ -157,9 +163,11 @@ function addtoPage(first, second) {
     <img src= ${first.teams[0].strStadiumThumb} >
     </br>
     <li><a href="http://localhost:3000/news/manager">Click here to get manager news</a></li>
+    <li><a href="http://localhost:3000/news/stadium">Click here to get stadium news</a></li>
 
     <h3>Squad List</h3>
     ${squadList}
+  
     </body></html>`;
   return str;
 }

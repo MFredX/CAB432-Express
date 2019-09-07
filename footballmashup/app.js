@@ -1,6 +1,7 @@
 const express = require("express");
 const teamRouter = require("./routes/team");
 const newsRouter = require("./routes/news");
+const playerRouter = require("./routes/players");
 const helmet = require("helmet");
 
 const app = express();
@@ -45,6 +46,7 @@ app.get("/", (req, res) => {
 
 app.use("/teams?", teamRouter.router);
 app.use("/news?", newsRouter);
+app.use("/player?", playerRouter);
 app.listen(port, function() {
   console.log(`Express app listening at http://${hostname}:${port}/`);
 });

@@ -10,11 +10,8 @@ console.log(teamNewsData);
 router.use(logger("tiny"));
 
 router.get("/manager", (req, res) => {
-  res.send(`Welcome to Manager News of ${teamNewsData.manager}`);
-  //Construct url
-  //   const url = `https://www.${options.hostname}${options.path}${options.lookup}${options.id}`;
-  //   const url = `https://newsapi.org/v2/everything?q=Frank%20Lampard&qInTitle=Frank%20Lampard&apiKey=a995f2849eeb43b099d1a124a2aed9e7`;
-  const url = `https://newsapi.org/v2/everything?q=${teamNewsData.manager}&qInTitle=${teamNewsData.manager}&apiKey=a995f2849eeb43b099d1a124a2aed9e7`;
+  //Construct url for manager news
+  const url = `https://newsapi.org/v2/everything?qInTitle=${teamNewsData.manager}&apiKey=a995f2849eeb43b099d1a124a2aed9e7&language=en`;
 
   console.log(url);
   //Begin the request
@@ -22,34 +19,61 @@ router.get("/manager", (req, res) => {
   axios
     .get(url)
     .then(response => {
-      //   res.writeHead(response.status, { "content-type": "text/html" });
       return response.data;
     })
     .then(rsp => {
       console.log(rsp);
       const x = createNewsPage(rsp);
-      console.log(x);
       res.write(x, function(err) {
         res.end();
       });
-      //   res.end();
     })
     .catch(error => {
       console.error(error);
     });
 });
 
+router.get("/stadium", (req, res) => {
+  //Construct url for stadium news
+  // const url = `https://newsapi.org/v2/everything?q=${teamNewsData.stadium}&qInTitle=${teamNewsData.stadium}&apiKey=a995f2849eeb43b099d1a124a2aed9e7`;
+  const url = `https://newsapi.org/v2/everything?qInTitle=${teamNewsData.stadium}&apiKey=a995f2849eeb43b099d1a124a2aed9e7&language=en`;
+
+  console.log(url);
+  //Begin the request
+  //This is request gets trending manager news
+  axios
+    .get(url)
+    .then(response => {
+      return response.data;
+    })
+    .then(rsp => {
+      console.log(rsp);
+      const x = createNewsPage(rsp);
+      res.write(x, function(err) {
+        res.end();
+      });
+    })
+    .catch(error => {
+      console.error(error);
+    });
+});
 function createNewsPage(rsp) {
   let newsHeadlines = "";
   for (let i = 0; i < rsp.articles.length; i++) {
-    newsHeadlines += rsp.articles[i].title;
+    newsHeadlines += `<h2>${rsp.articles[i].title}</h2>
+    <h2>${rsp.articles[i].description}</h2>
+    <p>${rsp.articles[i].publishedAt}</p>
+    <a href=  ${rsp.articles[i].url}>  ${rsp.articles[i].url}</a>
+    <img src=${rsp.articles[i].urlToImage} height="477" width="912">`;
   }
   const str = `<!DOCTYPE html>
-  <html><head><title>Sports DB</title></head>
+  <html><head><title>News Page</title></head>
+  <h1><b>Welcome to the news page<h1></b>
   <body>
   ${newsHeadlines}
   </body></html>`;
 
   return str;
 }
+
 module.exports = router;
