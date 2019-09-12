@@ -6,6 +6,7 @@ const axios = require("axios");
 router.use(logger("tiny"));
 
 router.get("/:playername", (req, res) => {
+  res.set("content-type", "text/html");
   //   res.write(`Welcome to the news page of ${req.params.playername}`);
   const url = `https://newsapi.org/v2/everything?qInTitle=${req.params.playername}&apiKey=a995f2849eeb43b099d1a124a2aed9e7&language=en`;
 

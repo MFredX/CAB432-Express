@@ -19,6 +19,7 @@ const getResponse = {
   second: null
 };
 router.get("/:team", (req, res) => {
+  res.set("content-type", "text/html");
   const options = createSportsDBObj(req.params.team);
   //Construct url
   const url = `https://www.${options.hostname}${options.path}${options.lookup}${options.id}`;
@@ -28,7 +29,7 @@ router.get("/:team", (req, res) => {
   axios
     .get(url)
     .then(response => {
-      res.writeHead(response.status, { "content-type": "text/html" });
+      // res.writeHead(response.status, { "content-type": "text/html" });
       return response.data;
     })
     .then(rsp => {
@@ -64,7 +65,6 @@ router.get("/:team", (req, res) => {
     });
 });
 
-router.get("/squad", (req, res) => {});
 function createSportsDBObj(query) {
   //https://www.thesportsdb.com/api/v1/json/1/lookupteam.php?id={TEAMID}
   const sportsDBObj = {
@@ -151,13 +151,18 @@ function addtoPage(first, second) {
 
   console.log(teamNewsData);
   const str = `<!DOCTYPE html>
-    <html><head><title>Sports DB</title></head>
+    <html>
+    
+    <head><title>Sports DB</title>
+    <link rel="stylesheet" href="/styles.css">
+    </head>
     <body>
-    <img src= ${first.teams[0].strTeamBadge} >
-    <img src= ${first.teams[0].strTeamJersey} >
 
-    <h1>${first.teams[0].strTeam}</h1>
-    <p>${first.teams[0].strDescriptionEN}</p> 
+
+    <h1 class="title">${first.teams[0].strTeam}</h1>
+    <img class="badge" src= ${first.teams[0].strTeamBadge} >
+    <img class="kit" src= ${first.teams[0].strTeamJersey} >
+    <p class="text">${first.teams[0].strDescriptionEN}</p> 
     <li>Stadium Name:${first.teams[0].strStadium}</li>
    
     <img src= ${first.teams[0].strStadiumThumb} >

@@ -6,10 +6,12 @@ const axios = require("axios");
 var teamObj = require("./team");
 
 const teamNewsData = teamObj.teamNewsData;
+
 console.log(teamNewsData);
 router.use(logger("tiny"));
 
 router.get("/manager", (req, res) => {
+  res.set("content-type", "text/html");
   //Construct url for manager news
   const url = `https://newsapi.org/v2/everything?qInTitle=${teamNewsData.manager}&apiKey=a995f2849eeb43b099d1a124a2aed9e7&language=en`;
 
@@ -34,6 +36,8 @@ router.get("/manager", (req, res) => {
 });
 
 router.get("/stadium", (req, res) => {
+  res.set("content-type", "text/html");
+
   //Construct url for stadium news
   // const url = `https://newsapi.org/v2/everything?q=${teamNewsData.stadium}&qInTitle=${teamNewsData.stadium}&apiKey=a995f2849eeb43b099d1a124a2aed9e7`;
   const url = `https://newsapi.org/v2/everything?qInTitle=${teamNewsData.stadium}&apiKey=a995f2849eeb43b099d1a124a2aed9e7&language=en`;

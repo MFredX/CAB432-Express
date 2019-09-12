@@ -8,6 +8,7 @@ const app = express();
 
 const hostname = "127.0.0.1";
 const port = 3000;
+app.use(express.static("public"));
 
 app.get("/", (req, res) => {
   const str = `<!DOCTYPE html> 
@@ -39,7 +40,7 @@ app.get("/", (req, res) => {
     <li><a href="http://localhost:3000/teams/Wolverhampton%20Wanderers">Wolverhampton Wanderers</a></li>
     </ul></body></html>`;
 
-  res.writeHead(200, { "content-type": "text/html" });
+  // res.writeHead(200, { "content-type": "text/html" });
   res.write(str);
   res.end();
 });

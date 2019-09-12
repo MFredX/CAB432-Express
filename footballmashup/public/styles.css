@@ -1,0 +1,30 @@
+h1.title {
+  font-family: Arial;
+  font-size: 40px;
+  font-style: normal;
+  font-variant: normal;
+  /* font-weight: 700; */
+  /* line-height: 26.4px; */
+  /* position: relative;
+  top: 1%;
+  left: 1%; */
+}
+
+p.text {
+  font-family: Arial;
+  font-size: 20px;
+  font-style: normal;
+  font-variant: normal;
+}
+
+/* img.badge {
+  position: absolute;
+  top: 15%;
+  left: 5%;
+}
+
+img.kit {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+} */
