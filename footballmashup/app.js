@@ -1,13 +1,14 @@
 const express = require("express");
-const flickrRouter = require("./routes/flickr");
 const teamRouter = require("./routes/team");
 const newsRouter = require("./routes/news");
+const playerRouter = require("./routes/players");
 const helmet = require("helmet");
 
 const app = express();
 
 const hostname = "127.0.0.1";
 const port = 3000;
+app.use(express.static("public"));
 
 app.get("/", (req, res) => {
   const str = `<!DOCTYPE html> 
@@ -39,14 +40,14 @@ app.get("/", (req, res) => {
     <li><a href="http://localhost:3000/teams/Wolverhampton%20Wanderers">Wolverhampton Wanderers</a></li>
     </ul></body></html>`;
 
-  res.writeHead(200, { "content-type": "text/html" });
+  // res.writeHead(200, { "content-type": "text/html" });
   res.write(str);
   res.end();
 });
 
-app.use("/search?", flickrRouter);
-app.use("/teams?", teamRouter);
+app.use("/teams?", teamRouter.router);
 app.use("/news?", newsRouter);
+app.use("/player?", playerRouter);
 app.listen(port, function() {
   console.log(`Express app listening at http://${hostname}:${port}/`);
 });
