@@ -7,7 +7,7 @@ var teamObj = require("./team");
 
 const teamNewsData = teamObj.teamNewsData;
 
-console.log(teamNewsData);
+// console.log(teamNewsData);
 router.use(logger("tiny"));
 
 router.get("/manager", (req, res) => {
@@ -24,7 +24,7 @@ router.get("/manager", (req, res) => {
       return response.data;
     })
     .then(rsp => {
-      console.log(rsp);
+      // console.log(rsp);
       const x = createNewsPage(rsp);
       res.write(x, function(err) {
         res.end();
