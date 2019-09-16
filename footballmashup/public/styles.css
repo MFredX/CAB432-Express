@@ -17,14 +17,62 @@ p.text {
   font-variant: normal;
 }
 
-/* img.badge {
-  position: absolute;
-  top: 15%;
-  left: 5%;
+div.bg {
+  background-image: url("edenwall.png");
+  background-size: cover;
+  min-height: 100%;
+  min-width: 1024px;
+  width: 100%;
+  height: auto;
+  position: fixed;
+  top: 0;
+  left: 0;
 }
 
-img.kit {
-  position: absolute;
-  top: 20%;
-  left: 50%;
-} */
+@media screen and (max-width: 1024px) {
+  div.bg {
+    left: 50%;
+    margin-left: -512px;
+  }
+}
+
+body.body {
+  font-family: Arial;
+  font-size: 20px;
+  font-style: normal;
+  font-variant: normal;
+  color: aliceblue;
+}
+
+li.li {
+  margin-left: 2%;
+}
+
+h1.head {
+  margin-left: 2%;
+}
+
+p.p {
+  margin-left: 2%;
+}
+
+a.playernews {
+  padding-left: 2%;
+}
+
+body.team {
+  font-family: Arial;
+  font-size: 20px;
+  font-style: normal;
+  font-variant: normal;
+  text-align: center;
+}
+
+li.playerOne {
+  padding-top: 1%;
+  margin: 1%;
+}
+
+h2.newsHead {
+  font-size: 40px;
+}

@@ -39,7 +39,6 @@ router.get("/stadium", (req, res) => {
   res.set("content-type", "text/html");
 
   //Construct url for stadium news
-  // const url = `https://newsapi.org/v2/everything?q=${teamNewsData.stadium}&qInTitle=${teamNewsData.stadium}&apiKey=a995f2849eeb43b099d1a124a2aed9e7`;
   const url = `https://newsapi.org/v2/everything?qInTitle=${teamNewsData.stadium}&apiKey=a995f2849eeb43b099d1a124a2aed9e7&language=en`;
 
   console.log(url);
@@ -51,7 +50,6 @@ router.get("/stadium", (req, res) => {
       return response.data;
     })
     .then(rsp => {
-      console.log(rsp);
       const x = createNewsPage(rsp);
       res.write(x, function(err) {
         res.end();
@@ -61,19 +59,21 @@ router.get("/stadium", (req, res) => {
       console.error(error);
     });
 });
+
 function createNewsPage(rsp) {
   let newsHeadlines = "";
   for (let i = 0; i < rsp.articles.length; i++) {
-    newsHeadlines += `<h2>${rsp.articles[i].title}</h2>
-    <h2>${rsp.articles[i].description}</h2>
+    newsHeadlines += `<h2 class="newsHead">${rsp.articles[i].title}</h2>
+    <h2><i>${rsp.articles[i].description}</i></h2>
     <p>${rsp.articles[i].publishedAt}</p>
     <a href=  ${rsp.articles[i].url}>  ${rsp.articles[i].url}</a>
-    <img src=${rsp.articles[i].urlToImage} height="477" width="912">`;
+    <img src=${rsp.articles[i].urlToImage}>`;
   }
   const str = `<!DOCTYPE html>
-  <html><head><title>News Page</title></head>
+  <html><head><title>News Page</title>
+  <link rel="stylesheet" href="/styles.css"></head>
   <h1><b>Welcome to the news page<h1></b>
-  <body>
+  <body class="team">
   ${newsHeadlines}
   </body></html>`;
 

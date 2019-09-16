@@ -29,7 +29,6 @@ router.get("/:team", (req, res) => {
   axios
     .get(url)
     .then(response => {
-      // res.writeHead(response.status, { "content-type": "text/html" });
       return response.data;
     })
     .then(rsp => {
@@ -77,7 +76,6 @@ function createSportsDBObj(query) {
   //as we will be able to hit the correct endpoint if the correct team id is in the request
 
   //The following conditional statements detect the team specified and provide the respective team ID
-  //%20??? for spaces
   if (query == "Arsenal") {
     sportsDBObj.id = "133604";
   } else if (query == "Aston Villa") {
@@ -141,34 +139,30 @@ function addtoPage(first, second) {
       squadList += `${onePlayerName}  <b><i>${onePlayerPosition}</i></b>  </br>`;
     } else {
       teamNewsData.players.push(onePlayerName);
-      squadList += `${onePlayerName}  <i>${onePlayerPosition}</i> <li><a href="http://localhost:3000/player/${onePlayerName}">Click here for player news</a></li>  </br>`;
+      squadList += `<li class="playerOne">${onePlayerName}  <i>${onePlayerPosition}</i></li></br> <a href="../player/${onePlayerName}" class="playernews">Click here for player news</a>  </br>`;
     }
   }
-  // let dropList = `<select id="players" name="players">`;
-  // for (let i = 0; i < teamNewsData.players.length; i++) {
-  //   dropList += `<option value=${teamNewsData.players[i]}>${teamNewsData.players[i]}</option>`;
-  // }
 
-  console.log(teamNewsData);
+  //Generating string for team page
   const str = `<!DOCTYPE html>
     <html>
     
     <head><title>Sports DB</title>
     <link rel="stylesheet" href="/styles.css">
     </head>
-    <body>
+    <body class="team">
 
 
     <h1 class="title">${first.teams[0].strTeam}</h1>
     <img class="badge" src= ${first.teams[0].strTeamBadge} >
     <img class="kit" src= ${first.teams[0].strTeamJersey} >
     <p class="text">${first.teams[0].strDescriptionEN}</p> 
-    <li>Stadium Name:${first.teams[0].strStadium}</li>
+    <li>Stadium Name: ${first.teams[0].strStadium}</li>
    
     <img src= ${first.teams[0].strStadiumThumb} >
     </br>
-    <li><a href="http://localhost:3000/news/manager">Click here to get manager news</a></li>
-    <li><a href="http://localhost:3000/news/stadium">Click here to get stadium news</a></li>
+    <li class="team"><a href="../news/manager">Click here to get manager news</a></li>
+    <li class="team"><a href="../news/stadium">Click here to get stadium news</a></li>
 
     <h3>Squad List</h3>
     ${squadList}
